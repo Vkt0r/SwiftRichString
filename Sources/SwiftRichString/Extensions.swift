@@ -76,11 +76,13 @@ public extension Array where Element: Style {
 	///
 	/// - Returns: tuple of index+instance or nil if not present
 	internal func defaultStyle() -> (index: Int?, item: Style?) {
-		let defaultIndex = self.index(where: {
-			if case .default = $0.name { return true }
-			return false
-		})
-		return (defaultIndex != nil ? (defaultIndex!,self[defaultIndex!]) : (nil,nil))
+        if let defaultIndex = self.index(where: {
+            if case .default = $0.name { return true }
+            return false
+        }) {
+            return (defaultIndex, self[defaultIndex])
+        }
+        return (nil, nil)
 	}
 	
 	/// Generate a new attributes dictionary, merge of the attributes from a list of Style
